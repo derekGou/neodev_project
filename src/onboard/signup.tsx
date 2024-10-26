@@ -63,9 +63,10 @@ function Signup(props:any) {
                         if (auth.currentUser){
                             updateProfile(auth.currentUser, {
                                 displayName: name
-                            })
+                            }).then(
+                                function(){window.location.href=window.location.href.slice(0,-5)+'scanner'}
+                            )
                         }
-                        window.location.href=window.location.href.slice(0,-5)+'scanner'
                     }
                 )
                 .catch((error) => {

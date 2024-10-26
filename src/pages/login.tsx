@@ -35,9 +35,9 @@ function Login(props:any) {
     }, [pageState])
 
     return (
-        <>
+        <div className="flex flex-col items-center justify-start h-full mt-16">
             <img className="w-8 h-8" src="/neodev.svg"/>
-            <h1>[Name]</h1>
+            <h1>Warpz</h1>
             <div className="h-8"/>
             <div className="rounded-lg bg-gray-500 box-border p-2 w-96">
                 <div className="flex flex-row items-center align-center rounded-lg overflow-hidden bg-gray-600 h-[50px]">
@@ -70,7 +70,7 @@ function Login(props:any) {
             <div style={{ display: signupState }} className="w-96 flex flex-col gap-4">
                 <Signup userID={props.userID}/>
             </div>
-        </>
+        </div>
     )
 }
   

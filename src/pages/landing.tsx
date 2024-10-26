@@ -12,11 +12,11 @@ function Landing() {
             </div>
             <div className="flex flex-col gap-4">
             <div>
-                <h1>[Name]</h1>
+                <h1>Warpz</h1>
                 <h2>Access anything, anywhere</h2>
             </div>
             <hr/>
-            <p>Scanning with [Name] is as easy as 1:</p>
+            <p>Scanning with Warpz is as easy as 1:</p>
             <ol className="list-decimal list-inside">
                 <li>Scan an object. That's it!</li>
             </ol>
