@@ -41,25 +41,19 @@ function Scan() {
     const [currUser, setCurrUser] = useState<any[]>([])
     const [files, setFiles] = useState([['akudwh', '23MB'],['akudwh', '23MB'],['akudwh', '23MB'],['akudwh', '23MB'],['akudwh', '23MB'],['akudwh', '23MB']])
     const [link, setLink] = useState<JSX.Element>()
-    const [frame, setFrame] = useState<any>()
     const [fileShow, setFileShow] = useState<JSX.Element[]>([])
     const [currFile, setCurrFile] = useState<string>('')
-    const [show3d, setShow3d] = useState<string>('none')
-
-    useEffect(()=>{
-    }, [show3d])
+    const [show3d, setShow3d] = useState<boolean>(false)
 
     onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/auth.user
-            setUid(user.uid)
-            // ...
-            if (currUser.length==0){
+        if (currUser.length==0){
+            if (user) {
+                setUid(user.uid)
                 setCurrUser([user.uid, user.displayName])
+            } else {
+                window.location.href=window.location.href.slice(0, -7)+'login'
             }
-        } else {
-            window.location.href=window.location.href.slice(0, -7)+'login'
+
         }
     });
 
@@ -100,8 +94,8 @@ function Scan() {
                         <IoIosClose/>                            
                     </div>
                     <div className="p-2 bg-[#234] cursor-pointer hover:brightness-200" onClick={(e)=>{
-                        setFrame('babababa')
-                        console.log('haha')
+                        setShow3d(true)
+                        setCurrFile(files[i][0])
                     }}>
                         <BiSolidShow/>                            
                     </div>
@@ -110,10 +104,6 @@ function Scan() {
         }
         setFileShow(rows)
     }, [files])
-
-    const garrr = () => {
-        console.log('har')
-    }
 
     return (
         <>
@@ -136,24 +126,6 @@ function Scan() {
                     </div>
                 </div>
                 <div className="flex flex-col border-2 border-white grow overflow-y-scroll">
-                    <div className="p-4 gap-4 flex flex-row border-[1px] border-white items-center align-center">
-                        <div className="p-2 bg-[#234] cursor-pointer hover:brightness-200">
-                            <FaFileDownload/>
-                        </div>
-                        <div className="flex flex-col grow">
-                            <p className="text-[0.8rem]">asd</p>
-                            <p className="text-[0.6rem]">asd</p>
-                        </div>
-                        <div className="p-2 bg-[#234] cursor-pointer hover:brightness-200">
-                            <IoIosClose/>                            
-                        </div>
-                        <div className="p-2 bg-[#234] cursor-pointer hover:brightness-200" onClick={(e)=>{
-                            setFrame('babababa')
-                            console.log('haha')
-                        }}>
-                            <BiSolidShow/>                            
-                        </div>
-                    </div>
                     {fileShow}
                 </div>
                 <button className="w-full" onClick={()=>{
@@ -164,11 +136,18 @@ function Scan() {
                     });
                 }}>Logout</button>
             </div>
-            <div style={{display:show3d}} className="w-screen h-screen bg-[#012] p-36 z-20 fixed">
-                <div className="flex w-full border-[1px] border-white box-content flex-row">
-                    <p className="grow">{currFile}</p>
+            <div style={{display: show3d ? 'block' : 'none'}} className="w-screen h-screen bg-[#012] p-36 z-20 fixed">
+                <div className="flex w-full border-[1px] border-white box-content items-center flex-row">
+                    <div className="ml-2 cursor-pointer" onClick={()=>{
+                        
+                    }}>
+                        <IconContext.Provider value={{size:'1rem', color:'white'}}>
+                            <FaFileDownload/>
+                        </IconContext.Provider>
+                    </div>
+                    <p className="grow ml-2">{currFile}</p>
                     <div className="cursor-pointer" onClick={()=>{
-                        setShow3d('none')
+                        setShow3d(false)
                     }}>
                         <IconContext.Provider value={{size:'2rem', color:'white'}}>
                             <IoIosClose/>
