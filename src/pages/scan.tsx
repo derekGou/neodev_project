@@ -12,6 +12,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { useLoader } from '@react-three/fiber';
 import { IoIosClose } from "react-icons/io";
+import { getStorage, ref } from "firebase/storage";
 
 const ObjModel = ({ url }) => {
     const obj = useLoader(OBJLoader, url);
@@ -37,6 +38,8 @@ const ObjModel = ({ url }) => {
   
 
 function Scan() {
+    const storage = getStorage();
+
     const [uid, setUid] = useState('')
     const [currUser, setCurrUser] = useState<any[]>([])
     const [files, setFiles] = useState([['akudwh', '23MB'],['akudwh', '23MB'],['akudwh', '23MB'],['akudwh', '23MB'],['akudwh', '23MB'],['akudwh', '23MB']])
@@ -72,10 +75,11 @@ function Scan() {
         const response = await fetch("localhost:5000/api", {
             method: "POST",
             headers: {
-                "Content-Type": "text/plain",
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(uid),
+            body: JSON.stringify({user: uid}),
         })
+        console.log(response)
     }
 
     useEffect(()=>{
@@ -119,7 +123,7 @@ function Scan() {
                     </a>
                     <div className="flex flex-col gap-4">
                         <h1>{'Welcome '+currUser[1]}</h1>
-                        <button className="gap-2 w-fit">
+                        <button className="gap-2 w-fit" onClick={()=>{runScan()}}>
                             <AiOutlineScan/>
                             Scan
                         </button>
